@@ -6,25 +6,21 @@
     $Cidade = "";
     $Estado = "";
     $ddd = "";
-
-    $cep_number = str_replace("-","", $cep);
-    $resultJSON = file_get_contents("https://viacep.com.br/ws/".$cep_number."/json/");
-    $resultArr = json_decode($resultJSON);
-    $tipo_logradouro = false || "Logradouro";
-    $Logradouro = $resultArr->logradouro;
-    $Bairro = $resultArr->bairro;
-    $Cidade = $resultArr->localidade;
-    $Estado = $resultArr->uf;
-    $ddd = $resultArr->ddd;
+    $cep_number = str_replace("-","",$cep);
+    
 
     if ($cep_number) {
+        $resultJSON = file_get_contents("https://viacep.com.br/ws/".$cep_number."/json/");
+        $resultArr = json_decode($resultJSON);
+        $Logradouro = $resultArr->logradouro;
+        $Bairro = $resultArr->bairro;
+        $Cidade = $resultArr->localidade;
+        $Estado = $resultArr->uf;
+        $ddd = $resultArr->ddd;
         $arquivo = "encontrado.txt";
         unlink($arquivo);
         $fp = fopen($arquivo, "a+");
         fwrite($fp, "CEP: {$cep}\r\nRua: {$resultArr->logradouro}\r\nBairro: {$resultArr->bairro}\r\nCidade: {$resultArr->localidade}\r\nEstado: {$resultArr->uf}\r\nDDD: {$resultArr->ddd}");
-        $data = mb_convert_encoding($data, 'UTF-8', 'auto');
-        file_put_contents($arquivo, $data);
-        fclose($fp);
     }
 ?>
 <!DOCTYPE html>
@@ -94,7 +90,7 @@
                         <div class="form">
                             <?=$ddd;?>
                         </div>
-                        <p class="daddy-button"><a href="encontrado.txt" class="button">Baixar Dados</a></p>
+                        <p class="daddy-button"><a href="encontrado.txt" download="endereço" class="button">Baixar Dados</a></p>
                     </form>
                 </div>
             </div>
