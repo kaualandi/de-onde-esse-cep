@@ -1,4 +1,5 @@
 <?php
+    $tipo_logradouro = "Logradouro";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br" class>
@@ -19,36 +20,48 @@
     </header>
     <main>
         <div class="to-flex">
-            <header>
-                <h2>Bem vindo.</h2>
-                <p>Busque aqui.</p>
-            </header>
-            <div class="form">
-                <form action="/">
-                    <label for="cep">CEP</label>
-                    <input required type="text" name="cep" id="cep" placeholder="00000-000">
-                    <button type="submit"><i class="fas fa-sign-in-alt"></i>Entrar</button>
-                </form>
-                <form id="searched">
-                    <label for="CEP">CEP</label>
-                    <input type="text" name="CEP" value="dsfs" disabled>
-
-                    <label for="CEP"><?$tipo_logradouro?></label>
-                    <input type="text" name="CEP" disabled>
-                    
-                    <label for="CEP">Bairro</label>
-                    <input type="text" name="CEP" disabled>
-                    
-                    <label for="CEP">Cidade</label>
-                    <input type="text" name="CEP" disabled>
-                    
-                    <label for="CEP">Estado</label>
-                    <input type="text" name="CEP" disabled>
-                    <a href="encontrado.txt" class="button">Baixar Dados</a>
-                </form>
-                <div class="credits">
-                    <p><a href="https://kaualf.netlify.app">By: Kauã Landi</a></p>
+            <h2 id="bemvido">Bem vindo.</h2>
+            <div class="box-board">
+                <div class="board">
+                    <header>
+                        <p>Busque aqui.</p>
+                     </header>
+                    <div class="form">
+                        <form action="/">
+                            <label for="cep">CEP</label>
+                            <input required type="text" name="cep" id="cep" placeholder="00000-000">
+                            <button type="submit"><i class="fas fa-search"></i>Buscar</button>
+                        </form>
+                        <div class="error404 off">
+                            <p>Pedimos desculpas mas não consguimos encontrar esse CEP, pode ser um erro interno ou ele não exista. Verifique o CEP e tente novamente.</p>
+                        </div>
+                    </div>
                 </div>
+                <div class="board">
+                    <header>
+                        <p>Resultado.</p>
+                    </header>
+                    <form id="searched">
+                        <label for="CEP">CEP</label>
+                        <input type="text" name="CEP" disabled>
+
+                        <label for="CEP"><?php echo $tipo_logradouro;?></label>
+                        <input type="text" name="CEP" disabled>
+                        
+                        <label for="CEP">Bairro</label>
+                        <input type="text" name="CEP" disabled>
+                        
+                        <label for="CEP">Cidade</label>
+                        <input type="text" name="CEP" disabled>
+                        
+                        <label for="CEP">Estado</label>
+                        <input type="text" name="CEP" disabled>
+                        <p class="daddy-button"><a href="encontrado.txt" class="button">Baixar Dados</a></p>
+                    </form>
+                </div>
+            </div>
+            <div class="credits">
+                <p class="daddy-button"><a class="button" href="https://kaualf.netlify.app">By: Kauã Landi</a></p>
             </div>
         </div>
     </main>
