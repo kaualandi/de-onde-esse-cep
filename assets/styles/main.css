@@ -48,10 +48,13 @@ a {
 form {
     margin-bottom: 2em;
 }
+.form {
+    height: 56px;
+}
 form input,
 form textarea,
 form select,
-form option {
+form option, .form {
     padding: 1em 1em;
     color: var(--font);
     background: var(--background-secundary);
@@ -71,6 +74,8 @@ form textarea {
 
 form label {
     font-size: .9em;
+    display: block;
+    margin-top: .5em;
 }
 textarea {
 	resize: none;
