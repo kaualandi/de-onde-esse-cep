@@ -6,8 +6,11 @@
     $Cidade = "";
     $Estado = "";
     $ddd = "";
+    $texto = "";
     $cep_number = str_replace("-","",$cep);
-    
+    $arquivo = "encontrado.txt";
+    $fp = fopen($arquivo, "w+");
+    fwrite($fp, $texto);
 
     if ($cep_number) {
         $resultJSON = file_get_contents("https://viacep.com.br/ws/".$cep_number."/json/");
@@ -17,10 +20,10 @@
         $Cidade = $resultArr->localidade;
         $Estado = $resultArr->uf;
         $ddd = $resultArr->ddd;
-        $arquivo = "encontrado.txt";
-        unlink($arquivo);
-        $fp = fopen($arquivo, "a+");
-        fwrite($fp, "CEP: {$cep}\r\nRua: {$resultArr->logradouro}\r\nBairro: {$resultArr->bairro}\r\nCidade: {$resultArr->localidade}\r\nEstado: {$resultArr->uf}\r\nDDD: {$resultArr->ddd}");
+        //$arquivo = "encontrado.txt";
+        //$fp = fopen($arquivo, "w+");
+        $texto = "CEP: {$cep}\r\nRua: {$resultArr->logradouro}\r\nBairro: {$resultArr->bairro}\r\nCidade: {$resultArr->localidade}\r\nEstado: {$resultArr->uf}\r\nDDD: {$resultArr->ddd}";
+        fwrite($fp, $texto);
     }
 ?>
 <!DOCTYPE html>
