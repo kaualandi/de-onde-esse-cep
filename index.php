@@ -1,12 +1,20 @@
 <?php
-    $cep = "";
-    
+    $cep = filter_input(INPUT_GET, "cep", FILTER_SANITIZE_STRING);
     $tipo_logradouro = "Logradouro";
     $Logradouro = "";
     $Bairro = "";
     $Cidade = "";
     $Estado = "";
 
+    $cep_number = str_replace("-","", $cep);
+    $resultJSON = file_get_contents('http://correiosapi.apphb.com/cep/'. $cep_number);
+    $resultArr = json_decode($resultJSON);
+    $tipo_logradouro = $resultArr->tipoDeLogradouro;
+    $Logradouro = $resultArr->logradouro;
+    $Bairro = $resultArr->bairro;
+    $Cidade = $resultArr->cidade;
+    $Estado = $resultArr->estado;
+    
 ?>
 <!DOCTYPE html>
 <html lang="pt-br" class>
@@ -33,7 +41,7 @@
                     <header>
                         <p>Busque aqui.</p>
                      </header>
-                    <form action="/">
+                    <form  method="GET" action="">
                         <label for="cep">CEP</label>
                         <input required type="text" name="cep" id="cep" placeholder="00000-000">
                         <button type="submit"><i class="fas fa-search"></i>Buscar</button>
@@ -46,28 +54,29 @@
                     <header>
                         <p>Resultado.</p>
                     </header>
-                    <form method="POST" id="searched">
-                        <label for="CEP">CEP</label>
-                        <div class="form" type="text" name="CEP"><?php echo $cep;?></div>
-
-                        <label for="CEP"><?php echo $tipo_logradouro;?></label>
-                        <div class="form" type="text" name="CEP">
-                            <?php echo $Logradouro;?>
+                    <form id="searched">
+                        <label>CEP</label>
+                        <div class="form">
+                            <?=$cep;?>
+                        </div>
+                        <label><?=$tipo_logradouro;?></label>
+                        <div class="form">
+                            <?=$Logradouro;?>
                         </div>
                         
-                        <label for="CEP">Bairro</label>
-                        <div class="form" type="text" name="CEP" >
-                            <?php echo $Bairro ?>
+                        <label>Bairro</label>
+                        <div class="form">
+                            <?=$Bairro;?>
                         </div>
                         
-                        <label for="CEP">Cidade</label>
-                        <div class="form" type="text" name="CEP" >
-                            <?php echo $Cidade ?>
+                        <label>Cidade</label>
+                        <div class="form">
+                            <?=$Cidade;?>
                         </div>
                         
-                        <label for="CEP">Estado</label>
-                        <div class="form" type="text" name="CEP" >
-                            <?php echo $Estado ?>
+                        <label>Estado</label>
+                        <div class="form">
+                            <?=$Estado;?>
                         </div>
                         <p class="daddy-button"><a href="encontrado.txt" class="button">Baixar Dados</a></p>
                     </form>
