@@ -7,9 +7,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/styles/main.css">
-    <link rel="stylesheet" href="../assets/styles/landing.css">
-    <link rel="shortcut icon" href="../favicon.svg">
+    <link rel="stylesheet" href="/assets/styles/main.css">
+    <link rel="stylesheet" href="/assets/styles/landing.css">
+    <link rel="shortcut icon" href="/favicon.svg">
 </head>
 <body>
     <header id="header">
@@ -54,9 +54,7 @@
     </main>
 
     <!-- SCRIPT -->
-    <script src="../assets/scripts/theme-button.js"></script>
-    <script src="../assets/scripts/primary-color-button.js"></script>
-    <script src="../assets/scripts/font.js"></script>
+    <script src="/assets/scripts/font.js"></script>
 </body>
 </html>
 </php>
