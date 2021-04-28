@@ -1,4 +1,5 @@
 <?php
+    RegistrarUser();
     $cep = filter_input(INPUT_GET, "cep", FILTER_SANITIZE_STRING);
     $tipo_logradouro = "Logradouro";
     $Logradouro = "";
@@ -24,6 +25,9 @@
         //$fp = fopen($arquivo, "w+");
         $texto = "CEP: {$cep}\r\nRua: {$resultArr->logradouro}\r\nBairro: {$resultArr->bairro}\r\nCidade: {$resultArr->localidade}\r\nEstado: {$resultArr->uf}\r\nDDD: {$resultArr->ddd}";
         fwrite($fp, $texto);
+    }
+    function RegistrarUser() {
+        
     }
 ?>
 <!DOCTYPE html>
