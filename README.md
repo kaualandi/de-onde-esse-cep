@@ -1,5 +1,5 @@
 # De Onde É Esse CEP?
-Usando a API dos Correios construi essa aplicação com interface amigavel de uso simples, basta preencher um único campo e clicar em buscar.
+Usando Via CEP construi essa aplicação com interface amigavel de uso simples, basta preencher um único campo e clicar em buscar.
 Você tambem pode baixar o CEP buscado para um arquivo txt.
 
-API dos Correios não está funcionando.
+Veja em http://deondeessecep.000webhostapp.com/

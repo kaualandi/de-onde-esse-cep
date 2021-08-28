@@ -1,5 +1,6 @@
 <?php
     RegistrarUser();
+    date_default_timezone_set("America/Sao_Paulo");
     $cep = filter_input(INPUT_GET, "cep", FILTER_SANITIZE_STRING);
     $tipo_logradouro = "Logradouro";
     $Logradouro = "";
@@ -9,30 +10,47 @@
     $ddd = "";
     $texto = "";
     $cep_number = str_replace("-","",$cep);
-    $arquivo = "encontrado.txt";
-    $fp = fopen($arquivo, "w+");
-    fwrite($fp, $texto);
-
     if ($cep_number) {
         $resultJSON = file_get_contents("https://viacep.com.br/ws/".$cep_number."/json/");
         $resultArr = json_decode($resultJSON);
-        $Logradouro = $resultArr->logradouro;
-        $Bairro = $resultArr->bairro;
-        $Cidade = $resultArr->localidade;
-        $Estado = $resultArr->uf;
-        $ddd = $resultArr->ddd;
-        //$arquivo = "encontrado.txt";
-        //$fp = fopen($arquivo, "w+");
-        $texto = "CEP: {$cep}\r\nRua: {$resultArr->logradouro}\r\nBairro: {$resultArr->bairro}\r\nCidade: {$resultArr->localidade}\r\nEstado: {$resultArr->uf}\r\nDDD: {$resultArr->ddd}";
+            $ddd = $resultArr->ddd;
+            $Logradouro = $resultArr->logradouro;
+            $Bairro = $resultArr->bairro;
+            $Cidade = $resultArr->localidade;
+            $Estado = $resultArr->uf;
+            gravarTXT("encontrado.txt","CEP: {$cep}\r\nRua: {$resultArr->logradouro}\r\nBairro: {$resultArr->bairro}\r\nCidade: {$resultArr->localidade}\r\nEstado: {$resultArr->uf}\r\nDDD: {$resultArr->ddd}","w+");
+    }
+    function gravarTXT($arquivo, $texto, $act) {
+        $fp = fopen($arquivo, $act);
         fwrite($fp, $texto);
     }
     function RegistrarUser() {
-        
+        $ipaddress = '';
+        if (isset($_SERVER['HTTP_CLIENT_IP'])) {
+            $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+        } else if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else if(isset($_SERVER['HTTP_X_FORWARDED'])) {
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+        } else if(isset($_SERVER['HTTP_FORWARDED_FOR'])) {
+            $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+        } else if(isset($_SERVER['HTTP_FORWARDED'])) {
+            $ipaddress = $_SERVER['HTTP_FORWARDED'];
+        } else if(isset($_SERVER['REMOTE_ADDR'])) {
+            $ipaddress = $_SERVER['REMOTE_ADDR'];
+        } else {
+            $ipaddress = 'UNKNOWN';
+        }
+        $dataehora = date("d/m/Y H:i:s");
+        gravarTXT("assets/log-entrada.txt", "IP: ".$ipaddress." || ".$dataehora."<br>\r\n","a+");
     }
 ?>
 <!DOCTYPE html>
-<html lang="pt-br" class>
+<html lang="pt-br">
 <head>
+    <script type="text/javascript" src="/assets/scripts/jquery-1.2.6.pack.js"></script>
+    <script type="text/javascript" src="/assets/scripts/jquery.maskedinput-1.1.4.pack.js"></script>
+    <script src="/assets/scripts/mask.js"></script>
     <title>De Onde É Esse CEP?</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -57,7 +75,7 @@
                      </header>
                     <form  method="GET" action="">
                         <label for="cep">CEP</label>
-                        <input required type="text" name="cep" id="cep" placeholder="00000-000">
+                        <input required type="tel" maxlength="8" name="cep" id="cep" class="mask-zipcode" placeholder="99999-999">
                         <button type="submit"><i class="fas fa-search"></i>Buscar</button>
                     </form>
                     <div class="error404 off">
@@ -109,6 +127,11 @@
 
     <!-- SCRIPT -->
     <script src="/assets/scripts/font.js"></script>
+    <script>
+        $(document).ready(function(){
+	        $(".mask-zipcode").mask("99999-999");
+        });
+    </script>
 </body>
 </html>
 </php>

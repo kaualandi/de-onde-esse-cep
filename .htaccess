@@ -1,0 +1,34 @@
+<files ~ "^.*\.([Hh][Tt][Aa])">
+order allow,deny
+deny from all
+satisfy all
+</files>
+
+# Proteger os arquivos e diretórios
+<FilesMatch "(\.(engine|inc|info|install|module|profile|po|sh|.sql|theme|tpl(\.php)? |xtmpl)|code-style\.pl|Entries.|Repository|Root|Tag|Template)$">
+	Order allow,deny
+</FilesMatch>
+# /Proteger os arquivos e diretórios
+
+# Não mostrar listagens de diretório
+Options -Indexes
+# /Não mostrar listagens de diretório
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^([^\.]+)$ $1.php [NC,L]
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    ErrorDocument 403 /403.php
+	ErrorDocument 404 /404.php
+</IfModule>
+
+
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteBase / 
+	RewriteRule ^admin pages/admin.php [L]
+</IfModule>
